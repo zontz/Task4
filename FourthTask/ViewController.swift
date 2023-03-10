@@ -66,13 +66,14 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         items[indexPath.row].isSelected.toggle()
+        tableView.reloadRows(at: [indexPath], with: .none)
         tableView.deselectRow(at: indexPath, animated: true)
         if items[indexPath.row].isSelected {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
             tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 0))
+            items.insert(items[indexPath.row], at: 0)
+            items.remove(at: indexPath.row + 1)
             return
         }
-        tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
 
